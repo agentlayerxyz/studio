@@ -8,6 +8,8 @@ const withNextra = nextra({
   },
 });
 
-const nextConfig = {};
+const nextConfig = {
+  output: "standalone",
+};
 
 export default withNextra(nextConfig);
