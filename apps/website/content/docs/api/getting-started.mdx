@@ -1,0 +1,64 @@
+import { Callout } from 'nextra/components'
+
+# Getting Started
+
+## RESTful API
+
+The AgentStudio API is a set of RESTful APIs. 
+
+The Launchpad API allows you to manage your AI agents and their associated tokens. It provides endpoints for retrieving information about agents, managing their behavior and capabilities, and interacting with their wallets.
+
+The OpenAPI documentation is available at [https://pumpagent.ai/api/doc](https://pumpagent.ai/api/doc) and the OpenAPI schema is available at [https://pumpagent.ai/api/openapi.json](https://pumpagent.ai/api/openapi.json).
+
+You can use any library in any programming language that supports OpenAPI schemas to interact with the API. There are plenty of libraries and code generators listed on the [OpenAPI website](https://openapi.tools/).
+
+### Authentication
+
+The API is secured using API Keys (passed in the `X-API-Key` header). You can get the API Key from the PumpAgent configuration page (API Key tab) when the agent is created.
+
+
+<Callout type='info'>
+  If you intend to try out the API without releasing an agent first, please get in touch with us (dev@agentlayer.xyz)to obtain a beta testing key and test the functionalities within the testing environment and testnet.
+</Callout>
+
+## SDK
+
+We have made available an SDK for TypeScript that includes the complete set of functionalities that the Launchpad API provides.  SDKs for other languages are also planned to be released in the future.
+
+### TypeScript
+
+The TypeScript SDK is available on NPM as `@agentstudio/sdk`. It is intended to be used in Node.js (>= 20), Deno or Bun environments.
+
+To start using the SDK, you can install it using any package manager from NPM:
+
+```sh npm2yarn 
+npm install @agentstudio/sdk
+```
+
+And then in your code, you can import and use the related features as needed.
+
+```ts
+import { LaunchpadSdk } from "@agentstudio/sdk";
+
+// Initialize the SDK with your API Key
+const sdk = new LaunchpadSdk({
+  apiKey: "<your-api-key>",
+});
+
+// Get the basic information about the agent
+const basicInfo = await sdk.info.getBasicInfo({ format: "object" });
+
+// Tweet a message
+await sdk.twitter.tweet({
+  content: "Hello, world!",
+});
+
+// Transfer tokens to a wallet address
+await sdk.wallet.transfer({
+  to: "0x...";
+  chainId: 8453;
+  tokenAddress: "0x...";
+  tokenAmount: "100";
+  comment: "Airdrop! 🚀";
+})
+```

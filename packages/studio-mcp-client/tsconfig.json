@@ -1,0 +1,7 @@
+{
+  "extends": "@agentlayer/typescript-config/lib.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "./dist"
+  }
+}

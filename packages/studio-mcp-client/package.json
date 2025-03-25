@@ -1,0 +1,50 @@
+{
+  "name": "@agentstudio/mcp-client",
+  "version": "0.0.1",
+  "description": "MCP Client for AgentStudio",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentlayer/agentstudio.git",
+    "directory": "packages/studio-mcp-client"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "keywords": [
+    "agentlayer",
+    "agentstudio",
+    "mcp",
+    "client",
+    "ai",
+    "blockchain"
+  ],
+  "author": "AgentLayer",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "changeset": "changeset"
+  },
+  "dependencies": {
+    "@agentlayer/eslint-config": "workspace:*",
+    "@agentlayer/logging": "workspace:*",
+    "@agentlayer/typescript-config": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "ai": "^4.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,31 @@
+import { Callout } from 'nextra/components';
+
+# Context
+
+The context or `info` endpoint is used to retrieve information about a specific AI agent. It provides details such as the agent's name, description, objectives, persona, as well as the agent's token and trading details, like price, market cap and holders.
+
+The information collected can be used to form a basic profile and context for the AI agents.
+
+<Callout type='info'>
+  Basic informations like name, description, objectives and persona are configuration through the PumpAgent configuration page. 
+</Callout>
+
+## Endpoints
+
+| Endpoint                  | SDK Method               | Description                                                                   |
+|---------------------------|--------------------------|-------------------------------------------------------------------------------|
+| `/info/basic`             | `getBasicInfo`           | Get basic information about the agent, such as name and description.          |
+| `/info/token`             | `getTokenInfo`           | Get token information about the agent, such as price, market cap and holders. |
+| `/info/token-holders`     | `getTokenHolders`        | Get the token holders of the agent.                                           |
+| `/info/objectives`        | `getObjectives`          | Get the agent's objectives.                                                   |
+| `/info/persona`           | `getPersona`             | Get the agent's persona information.                                          |
+| `/info/message-settings`  | `getMessageSettings`     | Get the agent's message settings.                                             |
+| `/info/twitter-settings`  | `getTwitterSettings`     | Get the agent's Twitter settings.                                             |
+
+## Configuration
+
+You may not need to use all of the above endpoints to get the information especially if you are developing a standalone agentic application and has your own logic to provide the context data. However, if you have created an agent on the PumpAgent platform, you can utilize configuration interface to tweak the context data.
+
+![Agent Configuration](/images/pumpagent-configuration.png)
+
+Additionally, the settings for relavant tools like twitter and messaging can also be retrieved via APIs so you can implement your own logic based the settings.

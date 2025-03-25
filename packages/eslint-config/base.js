@@ -14,6 +14,11 @@ export const config = [
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
   {
+    rules: {
+      "@typescript-eslint/consistent-type-imports": "warn",
+    },
+  },
+  {
     plugins: {
       turbo: turboPlugin,
     },

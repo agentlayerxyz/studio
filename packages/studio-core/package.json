@@ -1,0 +1,60 @@
+{
+  "name": "@agentstudio/core",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    "./type": {
+      "types": "./src/type.ts",
+      "default": "./dist/type.js"
+    },
+    "./logger": {
+      "types": "./src/logger.ts",
+      "default": "./dist/logger.js"
+    },
+    "./runtime": {
+      "types": "./src/runtime.ts",
+      "default": "./dist/runtime.js"
+    },
+    "./agent": {
+      "types": "./src/agent.ts",
+      "default": "./dist/agent.js"
+    },
+    "./scheduler": {
+      "types": "./src/scheduler.ts",
+      "default": "./dist/scheduler.js"
+    },
+    "./memory": {
+      "types": "./src/memory.ts",
+      "default": "./dist/memory.js"
+    },
+    "./message": {
+      "types": "./src/message.ts",
+      "default": "./dist/message.js"
+    },
+    "./error": {
+      "types": "./src/error.ts",
+      "default": "./dist/error.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
+  },
+  "devDependencies": {
+    "@agentlayer/eslint-config": "workspace:*",
+    "@agentlayer/typescript-config": "workspace:*",
+    "@types/node": "^22.12.0",
+    "eslint": "^9.22.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.4"
+  },
+  "dependencies": {
+    "ai": "^4.2.0",
+    "nanoid": "^5.0.9",
+    "pino": "^9.6.0",
+    "zod": "^3.24.1"
+  }
+}

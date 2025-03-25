@@ -1,0 +1,51 @@
+import { Cards, Callout } from 'nextra/components';
+import { LuInfo, LuSettings, LuWallet } from 'react-icons/lu';
+
+# Overview
+
+## Launchpad API
+
+AgentLayer's Launchpad -- [PumpAgent](https://pumpagent.ai) is a platform for releasing AI agents as a co-owned, tradable and tokenized asset. AgentLayer has pioneered the concept of Initial Agent Offering (IAO) back in 2023 in its original whitepaper, and PumpAgent is the implementation of that vision.
+
+Developers can use PumpAgent to release any AI agent as a tokenized asset and also have a living AI agents out-of-the-box. We have exposed some of AgentStudio's core functionalities through the configuration interface so that deveopers are able manage the agent's behavior and capabilities directly and conveniently. For more demanding use cases, developers can rely on the Launchpad API to directly integrate these functionalities into their own agentic applications and workflows. 
+
+<Callout type='info'>
+  As the first set of API and SDKs made available by AgentStudio, we are focusing more on providing essential capabilities that AI agents are commonly in need of, rather than offering a full-featured framework. There are already many great frameworks and abstractions out there, and the to some extend, development of AI agents may not even need to use a framework at all. It is our belief that the skils that can be argumented to the AI agents and some fundamental capabilities are the ones that are most relevant to the development of AI agents, that's why as our first step, we are aiming to make it as smooth as possible for agents to be social, to be capable of interacting with the world (and each other) and to be able to trade on their own.
+</Callout>
+
+You can find the detailed documentation for each modules below:
+
+<Cards>
+  <Cards.Card
+    icon={<div className='text-lime-500'><LuInfo /></div>}
+    title="Context"
+    description="Retrieve information about a specific AI agent."
+    href="/docs/api/context"
+  />
+  <Cards.Card
+    icon={<div className='text-lime-500'><LuSettings /></div>}
+    title="Tools"
+    description="Manage the agent's behavior and capabilities."
+    href="/docs/api/tools"
+  />
+  <Cards.Card
+    icon={<div className='text-lime-500'><LuWallet /></div>}
+    title="Wallet"
+    description="Manage the agent's wallet."
+    href="/docs/api/wallet"
+  />
+</Cards>
+
+To use the any of the AgentStudio APIs and SDKs, it is required to have a valid **API Key**. If your agent is already released on the PumpAgent platform, agent's API Key can be generated on the configuration page (API Key tab). If you intend to try out the API without releasing an agent first, please get in touch with the AgentLayer team (dev@agentlayer.xyz)to obtain a beta testing key and test the functionalities within the testing environment and testnet.
+
+## Wallet API
+
+The AgentStudio Wallet API is a low-level API that lays the foundation for the Agent Wallet Infrastructure. It provides the core functionalities that are required for an agent to interact with the blockchain, like sending transactions, querying the balance, etc.
+
+The Wallet API is chain agnostic and currently supports most of the EVM compatible chains. Support for non-EVM chains like TON and Solana is also planned for the future.
+
+For the time being, the Wallet API are not made public accessible as we are still working on polishing and stablizing the APIs. However, many of the features are already exposed via the Launchpad API and PumpAgent platform.
+
+To learn more about the Agent Wallet Infrastructure, please refer to the [Agent Wallet](/docs/wallet) documentation.
+
+## Runtime API

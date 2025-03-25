@@ -1,0 +1,62 @@
+{
+  "name": "@agentstudio/mcp-server",
+  "version": "0.0.1",
+  "description": "MCP Server for AgentStudio, providing common functionalities in AgentLayer & AgentStudio ecosystem.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentlayer/agentstudio.git",
+    "directory": "packages/studio-mcp-server"
+  },
+  "bin": {
+    "studio-mcp-server": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "keywords": [
+    "agentlayer",
+    "agentstudio",
+    "mcp",
+    "server",
+    "ai",
+    "blockchain"
+  ],
+  "author": "AgentLayer",
+  "license": "MIT",
+  "scripts": {
+    "build1": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "build": "tsup src/index.ts --format cjs,esm --dts && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "watch": "tsc --watch",
+    "check-types": "tsc --noEmit",
+    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
+    "changeset": "changeset"
+  },
+  "dependencies": {
+    "@agentlayer/eslint-config": "workspace:*",
+    "@agentlayer/logging": "workspace:*",
+    "@agentlayer/typescript-config": "workspace:*",
+    "@agentstudio/sdk": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "ai": "^4.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.13",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

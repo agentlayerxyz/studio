@@ -1,0 +1,75 @@
+# Overview
+
+## The Missing Piece for Autonomous AI Agents
+
+As large language models (LLMs) continue to advance in capabilities, autonomous AI agents are becoming increasingly reliable in handling complex tasks independently. These agents can now understand context, follow instructions, and make decisions with minimal human supervision. However, there's a critical component needed for truly autonomous agents operating in the real world: the ability to handle financial transactions.
+
+### The Growing Autonomy of AI Agents
+
+Modern AI agents can:
+- Research and analyze information
+- Create content and solve problems
+- Interact with both humans and other AI systems
+- Execute tasks across various platforms and services
+
+Despite these impressive capabilities, agents have been largely restricted from participating in economic activities - until now.
+
+### Financial Transactions: A Necessity for Real-World Tasks
+
+Many real-world tasks require financial capabilities:
+- Purchasing digital services or subscriptions
+- Paying for API access or computational resources
+- Compensating human contributors for their time
+- Ordering physical goods or services
+
+Without the ability to handle financial transactions, agents must constantly defer to human operators, creating friction and limiting their autonomy.
+
+### Blockchain Wallets: The Perfect Solution
+
+Blockchain wallets provide an ideal solution for agent-owned financial accounts:
+- **Programmable**: Can be controlled via code and smart contracts
+- **Secure**: Cryptographic security protects assets without centralized control
+- **Transparent**: All transactions are verifiable on public ledgers
+- **Permissionless**: No central authority can arbitrarily restrict access
+- **Global**: Functions across borders and jurisdictions
+
+### Enabling Revenue Streams for Agents
+
+With their own wallets, agents can also receive payment for services:
+- Users can compensate agents directly for completed tasks
+- Agent-to-agent services can be monetized
+- Complex multi-agent systems can include financial incentives
+- Subscription models can be implemented without intermediaries
+
+This creates a sustainable model where valuable agent services can be maintained and improved over time.
+
+### Multi-Agent Economies and Coordination
+
+As multi-agent systems become more common, financial transactions provide:
+- Clear incentive structures for cooperation
+- Friction-less transfer of value between agents
+- Transparent and immutable records of all interactions
+- Accountability through verifiable transaction history
+
+This infrastructure enables complex agent economies where specialized AI services can collaborate efficiently, with financial transactions serving as both motivation and record-keeping.
+
+### Beyond Simple Transactions
+
+Agent-owned wallets enable more than just basic payments:
+- **Smart Contracts**: Conditional agreements that execute automatically
+- **Tokenized Assets**: Ownership of digital and tokenized real-world assets
+- **DAO Participation**: Agents can participate in decentralized organizations
+- **DeFi Integration**: Access to lending, borrowing, and other financial services
+
+The combination of autonomous AI agents and blockchain wallets represents a paradigm shift in how we think about automation, services, and economic participation in the digital age.
+
+## Agent Wallet Infrastructure
+
+The Agent Wallet developed by [AgentLayer](https://agentlayer.xyz) is a set of tools and services that enable agents to have its own cryptographic wallet (or commonly referred to as externally owned account -- "EOA") and to interact with the blockchain. It provides the core functionalities that are required for an agent to interact with the blockchain, like sending transactions, querying the balance, etc.
+
+Security is the most important aspect of the Agent Wallet Infrastructure. The wallet's private key is never exposed to the agent and is securely managed via KMS (Key Management Service). Developers can choose to let the Agent Wallet infrastructure to manage the wallet's private key alone, or to opt-in for an MPC (Multi-Party Computation) based approach to split the private key into two shares and distribute the responsibility into two parties.
+
+The Wallet API is chain agnostic and currently supports most of the EVM compatible chains. Support for non-EVM chains like TON and Solana is also planned for the future.
+
+
+
