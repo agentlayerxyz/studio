@@ -150,14 +150,14 @@ export class StudioMcpServer {
 async function main() {
   try {
     const args = process.argv.slice(2);
-    if (args.length < 1) {
-      console.error("API key is required as a command line argument");
-      process.exit(1);
-    }
+
     const apiKey = args[0] ?? (process.env.AGENT_API_KEY as string);
 
     if (!apiKey) {
-      console.error("API key is required as a command line argument");
+      console.error(
+        "API key is required either as a command line argument or as the AGENT_API_KEY environment variable"
+      );
+      process.exit(1);
     }
 
     const server = new StudioMcpServer(apiKey);
