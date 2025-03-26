@@ -1,0 +1,72 @@
+name: docs-dev
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Set deployment tag"
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            TAG="${{ github.head_ref }}"
+          else
+            TAG="${{ github.ref_name }}"
+          fi
+            SANITIZED_TAG=$(echo "$TAG" | tr '/' '-')
+            echo "TAG=${SANITIZED_TAG}" >> $GITHUB_ENV
+
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.10.0
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/website
+          file: apps/website/Dockerfile
+          tags: ${{ secrets.DOCKER_USERNAME }}/studio-website:${{ env.TAG }}
+          push: true
+
+      - name: Trigger deploy
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/agentlayerxyz/devops/dispatches \
+            -d "{\"event_type\": \"deploy_dev_docs\", \"client_payload\": {\"tag\": \"${{ env.TAG }}\"}}"
