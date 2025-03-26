@@ -5,7 +5,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agentlayer/agentstudio.git",
+    "url": "https://github.com/agentlayerxyz/studio.git",
     "directory": "packages/studio-mcp-server"
   },
   "bin": {
