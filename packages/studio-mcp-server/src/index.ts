@@ -58,7 +58,7 @@ export class StudioMcpServer {
 
     this.server.resource(
       "persona",
-      "https://pumpagent.ai/agent/info/token",
+      "https://pumpagent.ai/agent/info/persona",
       async (uri) => {
         const persona = await this.sdk.info.getPersona({
           format: "plain-text",

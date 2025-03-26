@@ -30,24 +30,23 @@
   "author": "AgentLayer",
   "license": "MIT",
   "scripts": {
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "rolldown -c rolldown.config.ts --watch",
+    "build": "rolldown -c rolldown.config.ts",
     "test": "vitest",
-    "test:watch": "vitest --watch",
-    "changeset": "changeset"
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@agentlayer/eslint-config": "workspace:*",
     "@agentlayer/logging": "workspace:*",
-    "@agentlayer/typescript-config": "workspace:*",
     "openapi-fetch": "^0.13.5",
     "viem": "^2.23.14",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@agentlayer/eslint-config": "workspace:*",
+    "@agentlayer/typescript-config": "workspace:*",
     "@types/node": "^22.13.10",
     "openapi-typescript": "^7.6.1",
-    "tsup": "^8.4.0",
+    "rolldown": "1.0.0-beta.7",
     "typescript": "^5.8.2",
     "vitest": "^3.0.4"
   }

@@ -31,20 +31,19 @@
   "author": "AgentLayer",
   "license": "MIT",
   "scripts": {
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "changeset": "changeset"
+    "dev": "rolldown -c rolldown.config.ts --watch",
+    "build": "rolldown -c rolldown.config.ts"
   },
   "dependencies": {
-    "@agentlayer/eslint-config": "workspace:*",
     "@agentlayer/logging": "workspace:*",
-    "@agentlayer/typescript-config": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.7.0",
     "ai": "^4.2.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "tsup": "^8.4.0",
+    "@agentlayer/eslint-config": "workspace:*",
+    "@agentlayer/typescript-config": "workspace:*",
+    "rolldown": "1.0.0-beta.7",
     "typescript": "^5.8.2"
   }
 }
