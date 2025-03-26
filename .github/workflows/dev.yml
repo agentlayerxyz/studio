@@ -10,16 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Get branch name and save to env"
-        env:
-          IS_PR: ${{ github.EVENT_NAME == 'pull_request' }}
+      - name: "Set deployment tag"
         run: |
-          if ${IS_PR}; then
-            TAG="${GITHUB_HEAD_REF}"
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            TAG="${{ github.head_ref }}"
           else
-            TAG="${GITHUB_REF##*/}"
+            TAG="${{ github.ref_name }}"
           fi
-          echo "TAG=${TAG}" >> $GITHUB_ENV
+            SANITIZED_TAG=$(echo "$TAG" | tr '/' '-')
+            echo "TAG=${SANITIZED_TAG}" >> $GITHUB_ENV
 
       - name: Check out code
         uses: actions/checkout@v4
@@ -63,3 +62,11 @@ jobs:
           file: apps/website/Dockerfile
           tags: ${{ secrets.DOCKER_USERNAME }}/studio-website:${{ env.TAG }}
           push: true
+
+      - name: Trigger deploy
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/agentlayerxyz/devops/dispatches \
+            -d "{\"event_type\": \"deploy_studio_website_alpha\", \"client_payload\": {\"tag\": \"${{ env.TAG }}\"}}"
