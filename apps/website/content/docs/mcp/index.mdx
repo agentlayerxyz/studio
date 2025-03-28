@@ -1,1 +1,31 @@
-# MCP Support
+import { Callout} from 'nextra/components'
+
+# AgentStudio MCP Support
+
+## What is MCP?
+
+[Model Context Protocol (MCP)](https://www.modelcontextprotocol.org/) is an open protocol that enables seamless integration between LLM applications and external data sources and tools. Whether you’re building an AI-powered IDE, enhancing a chat interface, or creating custom AI workflows, MCP provides a standardized way to connect LLMs with the context they need.
+
+For implementation guides and examples, visit [modelcontextprotocol.io](https://www.modelcontextprotocol.org/).
+
+## MCP in AgentStudio
+
+AgentStudio has embraced MCP from day one. We have implemented MCP server which encapsulates all the functionalities of AgentStudio APIs and SDKs. We also provide a general purpose, framework agnostic MCP client implementation which can connect to multiple MCP servers.
+
+### MCP Server
+
+AgentStudio MCP server wraps around the AgentStudio APIs and SDKs and offers a unified interface to the MCP client for accessing Agent specific resources and tools. Resources like agent's basic information, token information and tools that enables common agent workflows like tweeting and blockchain transactions are available out of the box.
+
+Apart from common resources and tool call support, AgentStduio MCP sever also utilizes the notification mechanism specified in MCP to handle some essential asynchronous updates. For example, the MCP client can opt-in to subscribe to the agent's payment status updates, or transaction result updates, balance warning updates etc. 
+
+<Callout type="info">
+Currently the MCP server uses the stdio transport and must be started locally. We are working on an MCP endpoint that supports Streamable HTTP transport. Notification will be supported once the HTTP transport is ready.
+</Callout>
+
+### MCP Client
+
+AgentStudio MCP Client provides a easy-to-use abstraction for LLM applications to interact with multiple MCP servers.
+
+
+
+
