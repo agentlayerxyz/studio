@@ -30,8 +30,8 @@
   "author": "AgentLayer",
   "license": "MIT",
   "scripts": {
-    "dev": "rolldown -c rolldown.config.ts --watch",
-    "build": "rolldown -c rolldown.config.ts",
+    "dev": "pkgroll --watch",
+    "build": "pkgroll --clean-dist",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
@@ -46,7 +46,7 @@
     "@agentlayer/typescript-config": "workspace:*",
     "@types/node": "^22.13.10",
     "openapi-typescript": "^7.6.1",
-    "rolldown": "1.0.0-beta.7",
+    "pkgroll": "^2.12.1",
     "typescript": "^5.8.2",
     "vitest": "^3.0.4"
   }

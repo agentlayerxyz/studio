@@ -3,6 +3,12 @@
 import { LaunchpadSdk, TransferOptionsSchema } from "@agentstudio/sdk";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { Logger } from "@agentlayer/logging";
+
+const logger = new Logger({
+  service: "agentstudio-mcp-server",
+  useStdErr: true,
+});
 
 export class StudioMcpServer {
   private server: McpServer;
@@ -154,7 +160,7 @@ async function main() {
     const apiKey = args[0] ?? (process.env.AGENT_API_KEY as string);
 
     if (!apiKey) {
-      console.error(
+      logger.info(
         "API key is required either as a command line argument or as the AGENT_API_KEY environment variable"
       );
       process.exit(1);
@@ -162,14 +168,14 @@ async function main() {
 
     const server = new StudioMcpServer(apiKey);
     await server.start();
-    console.error("AgentStudio MCP server running on stdio");
+    logger.info("AgentStudio MCP server running on stdio");
   } catch (error) {
-    console.error("Error during startup", error);
+    logger.error("Error during startup", error);
     process.exit(1);
   }
 }
 
 main().catch((error) => {
-  console.error("Fatal error in main():", error);
+  logger.error("Fatal error in main():", error);
   process.exit(1);
 });

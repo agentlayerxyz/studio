@@ -1,23 +1,44 @@
 {
   "name": "@agentlayer/logging",
   "version": "0.0.1",
-  "private": true,
+  "description": "Logging utilities for AgentLayer",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentlayerxyz/studio.git",
+    "directory": "packages/logging"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "agentlayer",
+    "logging"
+  ],
+  "author": "AgentLayer",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint .",
-    "check-types": "tsc --noEmit"
+    "dev": "pkgroll --watch",
+    "build": "pkgroll --clean-dist"
   },
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "peerDependencies": {
-    "pino": "^9.6.0"
+  "dependencies": {
+    "@types/pino": "^7.0.5",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
   },
   "devDependencies": {
     "@agentlayer/eslint-config": "workspace:*",
     "@agentlayer/typescript-config": "workspace:*",
-    "pino-pretty": "^13.0.0",
-    "@types/pino": "^7.0.5",
+    "pkgroll": "^2.12.1",
     "typescript": "^5.8.2"
   }
 }

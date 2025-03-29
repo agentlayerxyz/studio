@@ -2,7 +2,7 @@ import { pino } from "pino";
 
 // Configure logger options
 const loggerOptions = {
-  level: process.env.LOG_LEVEL || "info",
+  level: process.env.LOG_LEVEL ?? "info",
   formatters: {
     level: (label: string) => {
       return { level: label };

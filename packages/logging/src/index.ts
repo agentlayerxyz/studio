@@ -4,34 +4,66 @@ export type LogLevel = "fatal" | "error" | "warn" | "info" | "debug" | "trace";
 
 export interface LoggerOptions {
   level?: LogLevel;
-  pretty?: boolean;
   timestamp?: boolean;
   service?: string;
+  logDir?: string;
+  useStdErr?: boolean;
 }
 
 class Logger {
   private logger: pino.Logger;
 
   constructor(options: LoggerOptions = {}) {
+    const isDev = process.env.NODE_ENV === "development";
+
     const {
-      level = "info",
-      pretty = process.env.NODE_ENV === "development",
+      level = process.env.LOG_LEVEL ?? (isDev ? "debug" : "info"),
       timestamp = true,
       service = "agentlayer",
+      useStdErr = false,
     } = options;
+
+    const logDir = `${options.logDir ?? process.env.LOG_DIR ?? "logs"}/${service}.log`;
+
+    const transport = isDev
+      ? pino.transport({
+          targets: [
+            {
+              target: "pino-pretty",
+              options: {
+                colorize: true,
+                translateTime: "SYS:standard",
+                ignore: "pid,hostname",
+                destination: useStdErr ? 2 : 1,
+              },
+            },
+          ],
+        })
+      : pino.transport({
+          targets: [
+            {
+              target: "pino-pretty",
+              options: {
+                levelFirst: true,
+                colorize: true,
+                translateTime: "SYS:standard",
+                ignore: "pid,hostname",
+                destination: useStdErr ? 2 : 1,
+              },
+            },
+            {
+              target: "pino/file",
+              options: {
+                destination: logDir,
+                mkdir: true,
+              },
+            },
+          ],
+        });
 
     this.logger = pino({
       level,
-      transport: pretty
-        ? {
-            target: "pino-pretty",
-            options: {
-              colorize: true,
-              translateTime: "SYS:standard",
-              ignore: "pid,hostname",
-            },
-          }
-        : undefined,
+      transport,
       timestamp: timestamp
         ? () => `,"time":"${new Date().toISOString()}"`
         : false,

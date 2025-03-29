@@ -15,9 +15,17 @@
     "dist"
   ],
   "exports": {
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/*.js"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./dist/index.js"
+    },
+    "./type": {
+      "types": "./src/type.ts",
+      "default": "./dist/index.js"
     }
   },
   "keywords": [
@@ -31,8 +39,8 @@
   "author": "AgentLayer",
   "license": "MIT",
   "scripts": {
-    "dev": "rolldown -c rolldown.config.ts --watch",
-    "build": "rolldown -c rolldown.config.ts"
+    "dev": "pkgroll --watch",
+    "build": "pkgroll --clean-dist"
   },
   "dependencies": {
     "@agentlayer/logging": "workspace:*",
@@ -43,7 +51,7 @@
   "devDependencies": {
     "@agentlayer/eslint-config": "workspace:*",
     "@agentlayer/typescript-config": "workspace:*",
-    "rolldown": "1.0.0-beta.7",
+    "pkgroll": "^2.12.1",
     "typescript": "^5.8.2"
   }
 }

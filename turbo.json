@@ -3,7 +3,9 @@
   "ui": "tui",
 
   "globalEnv": [
+    "NODE_ENV",
     "LOG_LEVEL",
+    "LOG_DIR",
     "PUMPAGENT_API_ROOT",
     "PUMPAGENT_API_KEY",
     "AGENT_API_KEY"
