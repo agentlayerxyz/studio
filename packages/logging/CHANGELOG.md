@@ -1,5 +1,11 @@
 # @agentlayer/logging
 
+## 0.0.2
+
+### Patch Changes
+
+- f76cae3: make logging package public / migration bundling tool to pkgroll
+
 ## 0.0.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@agentstudio/mcp-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MCP Client for AgentStudio",
   "type": "module",
   "repository": {

@@ -1,5 +1,13 @@
 # @agentstudio/mcp-client
 
+## 0.0.3
+
+### Patch Changes
+
+- f76cae3: make logging package public / migration bundling tool to pkgroll
+- Updated dependencies [f76cae3]
+  - @agentlayer/logging@0.0.2
+
 ## 0.0.2
 
 ### Patch Changes
