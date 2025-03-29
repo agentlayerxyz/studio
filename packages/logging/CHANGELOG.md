@@ -1,5 +1,11 @@
 # @agentlayer/logging
 
+## 0.0.3
+
+### Patch Changes
+
+- 0a883a8: Fix logger initialization
+
 ## 0.0.2
 
 ### Patch Changes

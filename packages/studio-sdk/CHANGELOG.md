@@ -1,5 +1,12 @@
 # @agentstudio/sdk
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [0a883a8]
+  - @agentlayer/logging@0.0.3
+
 ## 0.0.3
 
 ### Patch Changes
