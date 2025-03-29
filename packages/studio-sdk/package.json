@@ -48,6 +48,6 @@
     "openapi-typescript": "^7.6.1",
     "pkgroll": "^2.12.1",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.5"
   }
 }
