@@ -26,7 +26,7 @@ class Logger {
     const logDir = `${options.logDir ?? process.env.LOG_DIR ?? "logs"}/${service}.log`;
 
     const transport = isDev
-      ? pino.transport({
+      ? {
           targets: [
             {
               target: "pino-pretty",
@@ -38,8 +38,8 @@ class Logger {
               },
             },
           ],
-        })
-      : pino.transport({
+        }
+      : {
           targets: [
             {
               target: "pino-pretty",
@@ -59,7 +59,7 @@ class Logger {
               },
             },
           ],
-        });
+        };
 
     this.logger = pino({
       level,
