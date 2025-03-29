@@ -1,6 +1,6 @@
 {
   "name": "@agentstudio/sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "AgentStudio SDK is a set of tools and services maintained by [AgentLayer](https://agentlayer.xyz) as an effort to make it easier to build, test, and deploy AI agents. ",
   "type": "module",
   "repository": {

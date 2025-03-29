@@ -1,6 +1,6 @@
 {
   "name": "@agentlayer/logging",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Logging utilities for AgentLayer",
   "type": "module",
   "repository": {
