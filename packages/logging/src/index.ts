@@ -23,43 +23,34 @@ class Logger {
       useStdErr = false,
     } = options;
 
-    const logDir = `${options.logDir ?? process.env.LOG_DIR ?? "logs"}/${service}.log`;
+    const logDir = options.logDir ?? process.env.LOG_DIR;
 
-    const transport = isDev
-      ? {
-          targets: [
-            {
-              target: "pino-pretty",
-              options: {
-                colorize: true,
-                translateTime: "SYS:standard",
-                ignore: "pid,hostname",
-                destination: useStdErr ? 2 : 1,
-              },
-            },
-          ],
-        }
-      : {
-          targets: [
-            {
-              target: "pino-pretty",
-              options: {
-                levelFirst: true,
-                colorize: true,
-                translateTime: "SYS:standard",
-                ignore: "pid,hostname",
-                destination: useStdErr ? 2 : 1,
-              },
-            },
-            {
-              target: "pino/file",
-              options: {
-                destination: logDir,
-                mkdir: true,
-              },
-            },
-          ],
-        };
+    const transport: pino.TransportMultiOptions = {
+      targets: [
+        {
+          target: "pino-pretty",
+          options: {
+            colorize: true,
+            translateTime: "SYS:standard",
+            ignore: "pid,hostname",
+            destination: useStdErr ? 2 : 1,
+          },
+        },
+      ],
+    };
+
+    if (!isDev && !!logDir) {
+      transport.targets = [
+        ...transport.targets,
+        {
+          target: "pino/file",
+          options: {
+            destination: `${logDir}/${service}.log`,
+            mkdir: true,
+          },
+        },
+      ];
+    }
 
     this.logger = pino({
       level,
