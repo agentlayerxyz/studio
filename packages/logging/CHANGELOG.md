@@ -1,5 +1,11 @@
 # @agentlayer/logging
 
+## 0.0.4
+
+### Patch Changes
+
+- 46be66e: refactor logging initialization and log dir handling
+
 ## 0.0.3
 
 ### Patch Changes
