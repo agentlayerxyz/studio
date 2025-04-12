@@ -1,5 +1,14 @@
 # @agentstudio/mcp-server
 
+## 0.0.5
+
+### Patch Changes
+
+- 46be66e: add some tools and resources for messages and twitter
+- Updated dependencies [46be66e]
+  - @agentlayer/logging@0.0.4
+  - @agentstudio/sdk@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
