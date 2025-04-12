@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-import { LaunchpadSdk, TransferOptionsSchema } from "@agentstudio/sdk";
+import {
+  LaunchpadSdk,
+  TransferOptionsSchema,
+  TweetOptionsSchema,
+} from "@agentstudio/sdk";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { Logger } from "@agentlayer/logging";
@@ -163,7 +167,52 @@ export class StudioMcpServer {
       }
     );
 
-    // TODO support twitter methods
+    // TODO support other twitter methods
+
+    this.server.tool(
+      "twitter-post",
+      "Post a tweet to agent's Twitter account",
+      TweetOptionsSchema.shape,
+      async (args) => {
+        try {
+          const post = await this.sdk.twitter.tweet(args);
+
+          if (!post || !post.tweetId) {
+            return {
+              isError: true,
+              content: [{ type: "text", text: "Failed to post tweet" }],
+            };
+          }
+
+          return {
+            isError: false,
+            content: [
+              {
+                type: "resource",
+                resource: {
+                  mimeType: "text/plain",
+                  uri: `https://x.com/${post.tweetId}`,
+                  text: post.tweetId,
+                },
+              },
+            ],
+          };
+        } catch (error) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  error instanceof Error
+                    ? error.message
+                    : JSON.stringify(error),
+              },
+            ],
+          };
+        }
+      }
+    );
 
     // TODO support other wallet methods
 
