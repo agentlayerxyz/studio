@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 
-import { LaunchpadSdk, TransferOptionsSchema } from "@agentstudio/sdk";
+import {
+  LaunchpadSdk,
+  TransferOptionsSchema,
+  TweetOptionsSchema,
+} from "@agentstudio/sdk";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { Logger } from "@agentlayer/logging";
+import { z } from "zod";
 
 const logger = new Logger({
   service: "agentstudio-mcp-server",
@@ -28,63 +33,51 @@ export class StudioMcpServer {
   }
 
   async init() {
-    this.server.resource(
-      "basci-info",
-      "https://pumpagent.ai/agent/info/basic",
-      async (uri) => {
-        const info = await this.sdk.info.getBasicInfo({ format: "plain-text" });
-        return {
-          contents: [
-            {
-              type: "text",
-              text: info as string,
-              uri: uri.href,
-            },
-          ],
-        };
-      }
-    );
+    this.server.resource("basic-info", "agent://info/basic", async (uri) => {
+      const info = await this.sdk.info.getBasicInfo({ format: "plain-text" });
+      return {
+        contents: [
+          {
+            type: "text",
+            text: info as string,
+            uri: uri.href,
+          },
+        ],
+      };
+    });
 
-    this.server.resource(
-      "token-info",
-      "https://pumpagent.ai/agent/info/token",
-      async (uri) => {
-        const info = await this.sdk.info.getTokenInfo();
-        return {
-          contents: [
-            {
-              type: "text",
-              uri: uri.href,
-              text: JSON.stringify(info, null, 2),
-            },
-          ],
-        };
-      }
-    );
+    this.server.resource("token-info", "agent://info/token", async (uri) => {
+      const info = await this.sdk.info.getTokenInfo();
+      return {
+        contents: [
+          {
+            type: "text",
+            uri: uri.href,
+            text: JSON.stringify(info, null, 2),
+          },
+        ],
+      };
+    });
 
-    this.server.resource(
-      "persona",
-      "https://pumpagent.ai/agent/info/persona",
-      async (uri) => {
-        const persona = await this.sdk.info.getPersona({
-          format: "plain-text",
-        });
+    this.server.resource("persona", "agent://info/persona", async (uri) => {
+      const persona = await this.sdk.info.getPersona({
+        format: "plain-text",
+      });
 
-        return {
-          contents: [
-            {
-              type: "text",
-              text: persona as string,
-              uri: uri.href,
-            },
-          ],
-        };
-      }
-    );
+      return {
+        contents: [
+          {
+            type: "text",
+            text: persona as string,
+            uri: uri.href,
+          },
+        ],
+      };
+    });
 
     this.server.resource(
       "objectives",
-      "https://pumpagent.ai/agent/info/objectives",
+      "agent://info/objectives",
       async (uri) => {
         const objectives = await this.sdk.info.getObjectives({
           format: "plain-text",
@@ -102,14 +95,130 @@ export class StudioMcpServer {
       }
     );
 
-    // TODO support message methods
+    this.server.resource("wallet", "agent://info/wallet", async (uri) => {
+      const wallet = await this.sdk.wallet.getWallet();
+      return {
+        contents: [
+          {
+            type: "text",
+            text: wallet.publicKey,
+            uri: uri.href,
+          },
+        ],
+      };
+    });
 
-    // TODO support twitter methods
+    this.server.resource(
+      "recent-messages",
+      "agent://message/recent",
+      async () => {
+        const { messages } = await this.sdk.message.getRecentMessages();
+        return {
+          contents: messages.map((item) => ({
+            type: "text",
+            text: item.message,
+            uri: `agent://message/${item.id}`,
+          })),
+        };
+      }
+    );
+
+    this.server.tool(
+      "send-message",
+      "Send a message to PumpAgent message board as the agent",
+      {
+        message: z.string(),
+        replyTo: z.string().optional(),
+      },
+      async (args) => {
+        try {
+          const message = await this.sdk.message.createMessage(
+            args.message,
+            args.replyTo
+          );
+
+          return {
+            isError: false,
+            content: [
+              {
+                type: "resource",
+                resource: {
+                  mimeType: "text/plain",
+                  uri: `agent://message/${message.id}`,
+                  text: message.message,
+                },
+              },
+            ],
+          };
+        } catch (error) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  error instanceof Error
+                    ? error.message
+                    : JSON.stringify(error),
+              },
+            ],
+          };
+        }
+      }
+    );
+
+    // TODO support other twitter methods
+
+    this.server.tool(
+      "twitter-post",
+      "Post a tweet to agent's Twitter account",
+      TweetOptionsSchema.shape,
+      async (args) => {
+        try {
+          const post = await this.sdk.twitter.tweet(args);
+
+          if (!post || !post.tweetId) {
+            return {
+              isError: true,
+              content: [{ type: "text", text: "Failed to post tweet" }],
+            };
+          }
+
+          return {
+            isError: false,
+            content: [
+              {
+                type: "resource",
+                resource: {
+                  mimeType: "text/plain",
+                  uri: `https://x.com/${post.tweetId}`,
+                  text: post.tweetId,
+                },
+              },
+            ],
+          };
+        } catch (error) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  error instanceof Error
+                    ? error.message
+                    : JSON.stringify(error),
+              },
+            ],
+          };
+        }
+      }
+    );
 
     // TODO support other wallet methods
 
     this.server.tool(
       "wallet-transfer",
+      "Transfer ERC20 tokens to one or more wallet addresses on a given EVM compatible blockchain",
       TransferOptionsSchema.shape,
       async (args) => {
         const transfer = await this.sdk.wallet.transfer(args);
@@ -117,12 +226,14 @@ export class StudioMcpServer {
         if (transfer.success) {
           return {
             isError: false,
-            content: [
-              {
-                type: "text",
-                text: transfer.operationIds.join(", "),
+            content: transfer.operationIds.map((operationId) => ({
+              type: "resource",
+              resource: {
+                mimeType: "text/plain",
+                uri: `agent://wallet/transfer/${operationId}`,
+                text: operationId,
               },
-            ],
+            })),
           };
         } else {
           return {
