@@ -33,7 +33,7 @@ export class StudioMcpServer {
   }
 
   async init() {
-    this.server.resource("basci-info", "agent://info/basic", async (uri) => {
+    this.server.resource("basic-info", "agent://info/basic", async (uri) => {
       const info = await this.sdk.info.getBasicInfo({ format: "plain-text" });
       return {
         contents: [
