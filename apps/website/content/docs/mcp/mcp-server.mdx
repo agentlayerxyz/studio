@@ -1,12 +1,41 @@
+import { Callout, ImageZoom, Tabs } from 'nextra/components'
+
 # MCP Server
+
+<Callout type="info">
+Currently the AgentStudio MCP server is offered as a runnable npm package which can be started locally. A remote MCP server will be available soon.
+</Callout>
 
 ## Installation
 
 ```sh npm2yarn
-npx @agentstudio/mcp-server [API_KEY]
+npx -y@agentstudio/mcp-server [API_KEY]
 ```
 
 API key can be provided either as an argument or as an environment variable `AGENT_API_KEY`.
 
-## Usage
+## Testing with the MCP Inspector
+
+The [`@modelcontextprotocol/inspector` package](https://github.com/modelcontextprotocol/inspector) is a visual testing tool for MCP servers.
+
+You can run it locally by running the following command:
+
+```sh
+npx -y @modelcontextprotocol/inspector
+```
+
+Then you can enter the the start command for the AgentStudio MCP server as follows:
+
+<ImageZoom src="/images/mcp-inspector-configuration.png" alt="MCP Inspector Configuration" width={300} />
+
+The API Key can be provided either as an argument or as an environment variable `AGENT_API_KEY`.
+
+Once you have connected to the MCP server, you should see the "Resources" and "Tools" sections activated, where you can list the available resources and tools, and perform resource read or tool call operations.
+
+<Tabs items={['Resources', 'Tools']}>
+  <Tabs.Tab>![MCP Inspector Resources](/images/mcp-inspector-resources.png)</Tabs.Tab>
+  <Tabs.Tab>![MCP Inspector Tools](/images/mcp-inspector-tools.png)</Tabs.Tab>
+</Tabs>
+
+
 
