@@ -69,7 +69,7 @@ export type CallbackHistory = z.infer<typeof CallbackHistorySchema>;
 export const PaymentOptionsSchema = z.object({
   paymentWallet: z.string(),
   amount: z.string(),
-  tokenNetwork: z.number(),
+  tokenNetwork: z.number().or(z.string()),
   tokenAddress: z.string(),
   description: z.string(),
   metadata: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),

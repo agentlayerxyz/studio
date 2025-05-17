@@ -174,6 +174,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tool/twitter/by-tweet-id": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get tweet by tweet id */
+        get: operations["twitter-tweetByTweetId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tool/message": {
         parameters: {
             query?: never;
@@ -382,6 +399,23 @@ export interface paths {
             cookie?: never;
         };
         get: operations["info-tokenHolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/info/trading-data": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Retrieve trading data of the agent's own token */
+        get: operations["info-tradingData"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1661,6 +1695,7 @@ export interface operations {
         parameters: {
             query: {
                 username: string;
+                cursor?: string;
             };
             header?: never;
             path?: never;
@@ -1757,6 +1792,7 @@ export interface operations {
         parameters: {
             query: {
                 username: string;
+                cursor?: string;
             };
             header?: never;
             path?: never;
@@ -1800,6 +1836,127 @@ export interface operations {
                         next?: string;
                         previous?: string;
                     };
+                };
+            };
+            /** @description Invalid input data */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.BAD_REQUEST"];
+                };
+            };
+            /** @description Authorization not provided */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.UNAUTHORIZED"];
+                };
+            };
+            /** @description Insufficient access */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.FORBIDDEN"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.NOT_FOUND"];
+                };
+            };
+            /** @description Internal server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.INTERNAL_SERVER_ERROR"];
+                };
+            };
+        };
+    };
+    "twitter-tweetByTweetId": {
+        parameters: {
+            query: {
+                tweetId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        bookmarkCount?: number;
+                        conversationId?: string;
+                        hashtags?: string[];
+                        html?: string;
+                        id?: string;
+                        inReplyToStatus?: {
+                            id?: string;
+                            text?: string;
+                            permanentUrl?: string;
+                            username?: string;
+                            userId?: string;
+                        };
+                        isEdited?: boolean;
+                        isPin?: boolean;
+                        isQuoted?: boolean;
+                        isReply?: boolean;
+                        isRetweet?: boolean;
+                        isSelfThread?: boolean;
+                        likes?: number;
+                        mentions?: {
+                            id?: string;
+                            name?: string;
+                            username?: string;
+                        }[];
+                        name?: string;
+                        permanentUrl?: string;
+                        photos?: {
+                            id?: string;
+                            url?: string;
+                        }[];
+                        quotedStatus?: Record<string, never>;
+                        quotedStatusId?: string;
+                        replies?: number;
+                        retweetedStatus?: Record<string, never>;
+                        retweetedStatusId?: string;
+                        retweets?: number;
+                        sensitiveContent?: boolean;
+                        text?: string;
+                        thread?: {
+                            conversationId?: string;
+                            id?: string;
+                            text?: string;
+                            permanentUrl?: string;
+                            username?: string;
+                            userId?: string;
+                        }[];
+                        timeParsed?: string;
+                        timestamp?: number;
+                        urls?: string[];
+                        userId?: string;
+                        username?: string;
+                        versions?: string[];
+                        views?: number;
+                    } | null;
                 };
             };
             /** @description Invalid input data */
@@ -2391,7 +2548,7 @@ export interface operations {
                         name: string;
                         description: string;
                         ticker: string;
-                        tokenAddress: string;
+                        tokenAddress: string | null;
                         tokenStatus: string;
                         walletAddress: string | null;
                     };
@@ -2822,6 +2979,84 @@ export interface operations {
                         cursor?: string;
                         hasNext: boolean;
                     };
+                };
+            };
+            /** @description Invalid input data */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.BAD_REQUEST"];
+                };
+            };
+            /** @description Authorization not provided */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.UNAUTHORIZED"];
+                };
+            };
+            /** @description Insufficient access */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.FORBIDDEN"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.NOT_FOUND"];
+                };
+            };
+            /** @description Internal server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["error.INTERNAL_SERVER_ERROR"];
+                };
+            };
+        };
+    };
+    "info-tradingData": {
+        parameters: {
+            query: {
+                /** @description The timestamp in seconds */
+                since: number;
+                type?: "buy" | "sell" | "all";
+                /** @description The number of data points to return */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        blockTime: number;
+                        txnHash: string;
+                        from: string;
+                        to: string;
+                        amount: string;
+                        type: string;
+                    }[];
                 };
             };
             /** @description Invalid input data */
@@ -3569,7 +3804,7 @@ export interface operations {
                 "application/json": {
                     paymentWallet: string;
                     amount: string;
-                    tokenNetwork: number;
+                    tokenNetwork: number | string;
                     tokenAddress: string;
                     description: string;
                     metadata?: {
