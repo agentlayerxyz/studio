@@ -1,5 +1,11 @@
 # @agentstudio/sdk
 
+## 0.0.6
+
+### Patch Changes
+
+- 97ed2da: Adapt to the latest changes to Launchpad APIs
+
 ## 0.0.5
 
 ### Patch Changes
