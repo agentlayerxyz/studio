@@ -1,5 +1,12 @@
 # @agentstudio/mcp-server
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [97ed2da]
+  - @agentstudio/sdk@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes
