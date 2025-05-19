@@ -1,6 +1,6 @@
 {
   "name": "@agentstudio/mcp-server",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "MCP Server for AgentStudio, providing common functionalities in AgentLayer & AgentStudio ecosystem.",
   "type": "module",
   "repository": {
