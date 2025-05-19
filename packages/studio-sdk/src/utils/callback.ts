@@ -5,11 +5,17 @@ export async function verifySignature({
   payload,
   walletAddress,
   timestampTolerance = 1000 * 60 * 1, // 1 minutes
+  verifier,
 }: {
   signature: string | undefined;
   payload: Record<string, string> & { timestamp?: number };
-  walletAddress: `0x${string}`;
+  walletAddress: string;
   timestampTolerance?: number;
+  verifier?: (
+    message: string,
+    signature: string,
+    address: string
+  ) => Promise<boolean>;
 }): Promise<
   { verified: true; error?: never } | { verified: false; error: string }
 > {
@@ -48,11 +54,13 @@ export async function verifySignature({
       )
       .join("&") + `&timestamp=${timestamp}`;
 
-  const verified = await verifyMessage({
-    message: payloadString,
-    signature: signature as `0x${string}`,
-    address: walletAddress,
-  });
+  const verified = verifier
+    ? await verifier(payloadString, signature, walletAddress)
+    : await verifyMessage({
+        message: payloadString,
+        signature: signature as `0x${string}`,
+        address: walletAddress as `0x${string}`,
+      });
 
   return verified
     ? { verified: true }
