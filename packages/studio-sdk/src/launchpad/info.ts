@@ -4,7 +4,7 @@ export interface BasicInfo {
   name: string;
   description: string;
   ticker: string;
-  tokenAddress: string;
+  tokenAddress: string | null;
   tokenStatus: string;
   walletAddress: string | null;
 }
