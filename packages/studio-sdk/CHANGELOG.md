@@ -1,5 +1,12 @@
 # @agentstudio/sdk
 
+## 0.0.8
+
+### Patch Changes
+
+- d2e8715: Fix a type mismatch
+- d2e8715: Support custom verifier in verifySignature utility
+
 ## 0.0.7
 
 ### Patch Changes
